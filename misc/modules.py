@@ -1,4 +1,4 @@
-import datetime, json
+import datetime, json, os
 
 
 def standartize_wa(line):
@@ -49,7 +49,6 @@ def standartize_wa(line):
     #print([True for x in line[:11] if (x in "1234567890/.,: ") and bool(x)], line[:11])
     return [int(year), int(month), int(day), int(hour), int(minute), user, text]
 
-
 def standartize_tg(mess):
     if type(mess["text"]) != str or not bool(mess["text"]):
         return
@@ -60,7 +59,6 @@ def standartize_tg(mess):
     time = datetime.datetime.strptime(mess["date"], "%Y-%m-%dT%H:%M:%S")
 
     return [time, user, text]
-
 
 def generate_tg(path):
     def add_line(mess, mass):
@@ -92,7 +90,6 @@ def generate_tg(path):
 
     return d
 
-
 def generate_wa(path):
     def add_line(line, mass):
         stats = standartize_wa(line)
@@ -123,3 +120,23 @@ def generate_wa(path):
         d["messages"].append(message)
 
     return d
+
+
+def refactor_database():
+    with open("../res/chat.json") as f:
+        d = json.load(f)["messages"]
+
+    with open("config.json") as f:
+        aliases = json.load(f)["aliases"]
+
+    for elem in d:
+        name = elem["user"]
+
+        for i in range(len(aliases)):
+            if name in aliases[list(aliases.keys())[i]]:
+                elem["user"] = list(aliases.keys())[i]
+
+    os.remove("../res/chat.json")
+
+    with open("../res/chat.json", "x") as f:
+        json.dump({"messages": d}, f)

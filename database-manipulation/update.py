@@ -33,4 +33,4 @@ while not (len(tg) == 0 and len(wa) == 0):
 os.remove("../res/chat.json")
 
 with open("../res/chat.json", "x") as f:
-    json.dump(out, f)
+    json.dump({"messages" : out}, f)

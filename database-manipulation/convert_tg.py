@@ -1,44 +1,37 @@
 import json, datetime
+from modules import standartize_tg
 
-def standartize(mess):
-    if type(mess["text"]) != str or not bool(mess["text"]):
-        return
+def generate_tg(path):
+    def add_line(mess, mass):
+        stats = standartize_tg(mess)
+        if not stats:
+            return
 
-    user = mess["from"]
-    text = mess["text"]
+        d = {}
 
-    time = datetime.datetime.strptime(mess["date"], "%Y-%m-%dT%H:%M:%S")
+        d["time"] = stats[0].timetuple()
+        d["text"] = stats[-1]
+        d["user"] = stats[-2]
+        d["app"] = "tg"
 
-    return [time, user, text]
+        mass.append(d)
+        print("committed ", stats[-1])
 
-def add_line(mess, mass):
-    stats = standartize(mess)
-    if not stats:
-        return
+    messages = []
 
-    d = {}
+    with open(path, 'r') as f:
+        orig = json.load(f)
+        for elem in orig["messages"]:
+            add_line(elem, messages)
 
-    d["time"] = stats[0].timetuple()
-    d["text"] = stats[-1]
-    d["user"] = stats[-2]
-    d["app"] = "tg"
+    d = {"messages" : []}
 
-    mass.append(d)
-    print("committed ", stats[-1])
+    for message in messages:
+        d["messages"].append(message)
 
-messages = []
+    return d
 
-with open(input(), 'r') as f:
-    orig = json.load(f)
-    for elem in orig["messages"]:
-        add_line(elem, messages)
 
-with open("../res/chat.json", 'r') as f:
-    d = json.load(f)
-
-for message in messages:
-    d["messages"].append(message)
-
-with open("../res/chat.json", 'w') as f:
-    json.dump(d, f)
+with open("./res/chat.json", 'w') as f:
+    json.dump(generate_tg(input()), f)
 

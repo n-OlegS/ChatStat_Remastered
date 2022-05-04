@@ -71,11 +71,11 @@ with open(input(), 'r') as f:
     for line in f:
         add_line(line, messages)
 
-with open("res/chat.json", 'r') as f:
+with open("../res/chat.json", 'r') as f:
     d = json.load(f)
 
 for message in messages:
     d["messages"].append(message)
 
-with open("res/chat.json", 'w') as f:
+with open("../res/chat.json", 'w') as f:
     json.dump(d, f)

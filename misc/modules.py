@@ -1,4 +1,4 @@
-import datetime
+import datetime, json
 
 
 def standartize_wa(line):
@@ -60,3 +60,66 @@ def standartize_tg(mess):
     time = datetime.datetime.strptime(mess["date"], "%Y-%m-%dT%H:%M:%S")
 
     return [time, user, text]
+
+
+def generate_tg(path):
+    def add_line(mess, mass):
+        stats = standartize_tg(mess)
+        if not stats:
+            return
+
+        d = {}
+
+        d["time"] = stats[0].timetuple()
+        d["text"] = stats[-1]
+        d["user"] = stats[-2]
+        d["app"] = "tg"
+
+        mass.append(d)
+        print("committed ", stats[-1])
+
+    messages = []
+
+    with open(path, 'r') as f:
+        orig = json.load(f)
+        for elem in orig["messages"]:
+            add_line(elem, messages)
+
+    d = {"messages" : []}
+
+    for message in messages:
+        d["messages"].append(message)
+
+    return d
+
+
+def generate_wa(path):
+    def add_line(line, mass):
+        stats = standartize_wa(line)
+        if not stats:
+            return
+
+        d = {}
+
+        d["time"] = datetime.datetime(stats[0], stats[1], stats[2], stats[3], stats[4]).timetuple()
+        # d["time"] = list(datetime.datetime.now().timetuple())
+        d["text"] = stats[-1]
+        d["user"] = stats[-2]
+        d["app"] = "wa"
+
+        mass.append(d)
+        print("committed ", line)
+
+
+    messages = []
+
+    with open(path, 'r') as f:
+        for line in f:
+            add_line(line, messages)
+
+    d = {"messages" : []}
+
+    for message in messages:
+        d["messages"].append(message)
+
+    return d

@@ -74,7 +74,7 @@ def generate_tg(path):
         d["app"] = "tg"
 
         mass.append(d)
-        print("committed ", stats[-1])
+        #print("committed ", stats[-1])
 
     messages = []
 
@@ -105,7 +105,7 @@ def generate_wa(path):
         d["app"] = "wa"
 
         mass.append(d)
-        print("committed ", line)
+        #print("committed ", line)
 
 
     messages = []

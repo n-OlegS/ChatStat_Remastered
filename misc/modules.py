@@ -169,3 +169,14 @@ def getHours():
             last_time = current_time
 
     return count
+
+def addLists(x, y):
+    if not len(x) == len(y):
+        print("Addlists Error, terminating...")
+        quit()
+    else:
+        c = []
+        for i in range(len(x)):
+            c.append(int(x[i]) + int(y[i]))
+
+        return c

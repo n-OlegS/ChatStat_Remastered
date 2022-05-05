@@ -6,7 +6,7 @@ from datetime import datetime
 tg = generate_tg(input("Telegram export path: "))["messages"]
 wa = generate_wa(input("Whatsapp export path: "))["messages"]
 
-with open(os.getcwd() + '/config.json') as f:
+with open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/misc/config.json') as f:
     chat_path = json.load(f)["chat.json path"]
 
 out = []

@@ -6,6 +6,9 @@ from datetime import datetime
 tg = generate_tg(input("Telegram export path: "))["messages"]
 wa = generate_wa(input("Whatsapp export path: "))["messages"]
 
+with open(os.getcwd() + '/config.json') as f:
+    chat_path = json.load(f)["chat.json path"]
+
 out = []
 
 while not (len(tg) == 0 and len(wa) == 0):
@@ -30,7 +33,7 @@ while not (len(tg) == 0 and len(wa) == 0):
         out.append(tg_mess)
         del tg[0]
 
-os.remove("../res/chat.json")
+os.remove(chat_path)
 
-with open("../res/chat.json", "x") as f:
+with open(chat_path, "x") as f:
     json.dump({"messages" : out}, f)

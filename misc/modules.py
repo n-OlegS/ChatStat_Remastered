@@ -1,5 +1,7 @@
 import datetime, json, os
 
+with open(os.getcwd() + '/config.json') as f:
+    chat_path = json.load(f)["chat.json path"]
 
 def standartize_wa(line):
     if line == '' or not ('.' in line or '/' in line) or not ':' in line or not line[0] in "0987654321":
@@ -123,10 +125,10 @@ def generate_wa(path):
 
 
 def refactor_database():
-    with open("../res/chat.json") as f:
+    with open(chat_path) as f:
         d = json.load(f)["messages"]
 
-    with open("config.json") as f:
+    with open(os.getcwd() + '/config.json') as f:
         aliases = json.load(f)["aliases"]
 
     for elem in d:
@@ -134,9 +136,11 @@ def refactor_database():
 
         for i in range(len(aliases)):
             if name in aliases[list(aliases.keys())[i]]:
+                print("refactored")
                 elem["user"] = list(aliases.keys())[i]
 
-    os.remove("../res/chat.json")
+    os.remove(chat_path)
 
-    with open("../res/chat.json", "x") as f:
+    with open(chat_path, "x") as f:
         json.dump({"messages": d}, f)
+

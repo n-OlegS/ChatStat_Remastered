@@ -65,12 +65,9 @@ def graph_mpd():
         else:
             dates['-'.join([str(x) for x in date])] += 1
 
-    print(list(dates.values()))
-
     fig = px.line(
         x=list(dates.keys()),
         y=list(dates.values()),
-        title='Mpd'
     )
 
     html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/mpd.html', 'x')
@@ -78,4 +75,28 @@ def graph_mpd():
     fig.write_html(html_file, auto_open=False)
     html_file.close()
 
-graph_mpd()
+def graph_worduse(word):
+    with open(chat_path) as f:
+        d = json.load(f)["messages"]
+
+    dates = {}
+
+    for mess in d:
+        date = mess["time"][:3]
+
+        if word in [''.join(y for y in x if y.isalpha()) for x in mess["text"].split()]:
+            if '-'.join([str(x) for x in date]) not in list(dates.keys()):
+                dates['-'.join([str(x) for x in date])] = 1
+            else:
+                dates['-'.join([str(x) for x in date])] += 1
+
+    fig = px.bar(
+        x=list(dates.keys()),
+        y=list(dates.values()),
+    )
+
+    html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/wug.html', 'x')
+    html_file.truncate()
+    fig.write_html(html_file, auto_open=False)
+    html_file.close()
+

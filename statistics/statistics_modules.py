@@ -51,4 +51,31 @@ def graph_mph():
     fig.write_html(html_file, auto_open=False)
     html_file.close()
 
-graph_mph()
+
+def graph_mpd():
+    with open(chat_path) as f:
+        d = json.load(f)["messages"]
+    dates = {}
+
+    for mess in d:
+        date = mess["time"][:3]
+
+        if '-'.join([str(x) for x in date]) not in list(dates.keys()):
+            dates['-'.join([str(x) for x in date])] = 1
+        else:
+            dates['-'.join([str(x) for x in date])] += 1
+
+    print(list(dates.values()))
+
+    fig = px.line(
+        x=list(dates.keys()),
+        y=list(dates.values()),
+        title='Mpd'
+    )
+
+    html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/mpd.html', 'x')
+    html_file.truncate()
+    fig.write_html(html_file, auto_open=False)
+    html_file.close()
+
+graph_mpd()

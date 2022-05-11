@@ -128,7 +128,7 @@ def refactor_database():
     with open(chat_path) as f:
         d = json.load(f)["messages"]
 
-    with open(os.getcwd() + '/config.json') as f:
+    with open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/misc/config.json') as f:
         aliases = json.load(f)["aliases"]
 
     for elem in d:

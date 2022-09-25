@@ -7,9 +7,16 @@ tg = generate_tg(input("Telegram export path: "))["messages"]
 wa = generate_wa(input("Whatsapp export path: "))["messages"]
 
 with open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/misc/config.json') as f:
-    chat_path = json.load(f)["chat.json path"]
+    config = json.load(f)
+    chat_path = config["chat.json path"]
+    chat_dir = config["chat dir"]
 
+files = []
 out = []
+counter = 0
+file_counter = 0
+
+#os.remove(chat_dir)
 
 while not (len(tg) == 0 and len(wa) == 0):
     if len(wa) == 0:
@@ -33,6 +40,24 @@ while not (len(tg) == 0 and len(wa) == 0):
         out.append(tg_mess)
         del tg[0]
 
+    counter += 1
+    if counter >= 100000:
+        with open(f"{chat_dir}{file_counter}.json", "w") as w:
+            json.dump({"messages": out}, w)
+
+        out = []
+        file_counter += 1
+        counter = 0
+
+
+with open(f"{chat_dir}{file_counter}.json", "w") as w:
+    json.dump({"messages": out}, w)
+
+out = []
+file_counter += 1
+counter = 0
+
+quit()
 os.remove(chat_path)
 
 

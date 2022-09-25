@@ -35,5 +35,6 @@ while not (len(tg) == 0 and len(wa) == 0):
 
 os.remove(chat_path)
 
+
 with open(chat_path, "x") as f:
-    json.dump({"messages" : out}, f)
+    json.dump({"messages": out}, f)

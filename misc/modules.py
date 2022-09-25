@@ -62,6 +62,7 @@ def standartize_tg(mess):
 
     return [time, user, text]
 
+#NOT WORKING
 def generate_tg(path):
     def add_line(mess, mass):
         stats = standartize_tg(mess)
@@ -92,6 +93,7 @@ def generate_tg(path):
 
     return d
 
+#NOT WORKING
 def generate_wa(path):
     def add_line(line, mass):
         stats = standartize_wa(line)
@@ -107,7 +109,6 @@ def generate_wa(path):
         d["app"] = "wa"
 
         mass.append(d)
-        #print("committed ", line)
 
 
     messages = []

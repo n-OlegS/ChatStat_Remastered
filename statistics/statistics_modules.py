@@ -7,7 +7,10 @@ import datetime, os, json
 
 sign = ''
 
-with open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/misc/config.json') as f:
+CONFIGPATH = "/Users/oleg/PycharmProjects/chatstat_remastered/misc/config.json"
+HTML_DIR = "/Users/oleg/PycharmProjects/chatstat_remastered/res/htmls/"
+
+with open(CONFIGPATH) as f:
     chat_path = json.load(f)["chat.json path"]
 
 
@@ -75,7 +78,7 @@ def graph_mpd():
         y=list(dates.values()),
     )
 
-    html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/mpd.html', 'x')
+    html_file = open(f'{HTML_DIR}mpd.html', 'x')
     html_file.truncate()
     fig.write_html(html_file, auto_open=False)
     html_file.close()
@@ -101,7 +104,7 @@ def graph_mpd_v2():
         y=list(signal.savgol_filter([x for x in list(dates.values()) if 0 <= x <= 50000], 200, 3)),
     )
 
-    html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/mpd.html', 'x')
+    html_file = open(f'{HTML_DIR}mpdv2.html', 'x')
     html_file.truncate()
     fig.write_html(html_file, auto_open=False)
     html_file.close()
@@ -294,7 +297,7 @@ def graph_activity_v2():
 
     fig.show()
 
-
+graph_mpd()
 graph_mpd_v2()
 #graph_worduse("a*(b+c)")
 

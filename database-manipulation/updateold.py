@@ -2,11 +2,12 @@ from modules import generate_tg, generate_wa
 import json, time, os
 from datetime import datetime
 
+configpath = "/Users/oleg/PycharmProjects/chatstat_remastered/misc/config.json"
 
 tg = generate_tg(input("Telegram export path: "))["messages"]
 wa = generate_wa(input("Whatsapp export path: "))["messages"]
 
-with open(os.getcwd()[:os.getcwd().find("Remastered") + 19] + 'misc/config.json') as f:
+with open(configpath) as f:
     config = json.load(f)
     chat_path = config["chat.json path"]
     chat_dir = config["chat dir"]

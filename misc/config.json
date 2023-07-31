@@ -1,6 +1,8 @@
 {
-  "chat.json path": "",
-  "chat dir": "",
+  "chat.json path": "/Users/oleg/PycharmProjects/chatstat_remastered/res/chat.json",
+  "chat dir": "/Users/oleg/PycharmProjects/chatstat_remastered/res/generated/",
   "aliases": {
+    "yulia": [],
+    "oleg": []
   }
 }

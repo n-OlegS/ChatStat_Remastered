@@ -3,7 +3,7 @@ from collections import defaultdict
 import plotly.graph_objs as go
 import plotly.express as px
 from scipy import signal
-import datetime, os, json
+import datetime, json #, os,
 
 sign = ''
 
@@ -54,7 +54,7 @@ def graph_mph():
         )
     )
 
-    html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/mph.html', 'x')
+    html_file = open(f'{HTML_DIR}mph.html', 'x')
     html_file.truncate()
     fig.write_html(html_file, auto_open=False)
     html_file.close()
@@ -137,7 +137,7 @@ def better_parse(req, st):
     else:
         return 0
 
-
+"""
 def graph_worduse(word):
     count = 0
     with open(chat_path) as f:
@@ -296,7 +296,7 @@ def graph_activity_v2():
 
 
     fig.show()
-
+"""
 graph_mpd()
 graph_mpd_v2()
 #graph_worduse("a*(b+c)")

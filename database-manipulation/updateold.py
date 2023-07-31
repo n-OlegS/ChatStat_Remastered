@@ -1,5 +1,5 @@
 from modules import generate_tg, generate_wa
-import json, time, os
+import json, time # , os
 from datetime import datetime
 
 configpath = "/Users/oleg/PycharmProjects/chatstat_remastered/misc/config.json"
@@ -42,7 +42,7 @@ while not (len(tg) == 0 and len(wa) == 0):
         del tg[0]
 
 
-os.remove(chat_path)
+#os.remove(chat_path)
 
 
 with open(chat_path, "x") as f:

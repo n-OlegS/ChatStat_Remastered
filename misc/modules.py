@@ -101,5 +101,5 @@ class Modules:
 
 
 modules = Modules()
-print(modules.get_hours())
+print("Minutes spent in chat: ", modules.get_hours())
 

@@ -40,24 +40,7 @@ while not (len(tg) == 0 and len(wa) == 0):
         out.append(tg_mess)
         del tg[0]
 
-    counter += 1
-    if counter >= 100000:
-        with open(f"{chat_dir}{file_counter}.json", "w") as w:
-            json.dump({"messages": out}, w)
 
-        out = []
-        file_counter += 1
-        counter = 0
-
-
-with open(f"{chat_dir}{file_counter}.json", "w") as w:
-    json.dump({"messages": out}, w)
-
-out = []
-file_counter += 1
-counter = 0
-
-quit()
 os.remove(chat_path)
 
 

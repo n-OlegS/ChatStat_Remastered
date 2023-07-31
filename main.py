@@ -1,2 +1,2 @@
-from misc.modules import *
+from misc.d_modules import *
 refactor_database()

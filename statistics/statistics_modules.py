@@ -1,4 +1,4 @@
-from misc.modules import *
+from misc.d_modules import *
 from collections import defaultdict
 import plotly.graph_objs as go
 import plotly.express as px
@@ -94,9 +94,11 @@ def graph_mpd_v2():
         else:
             dates['-'.join([str(x) for x in date])] += 1
 
+    print([x for x in list(set(list(dates.keys()))) if not isinstance(x, int)])
+
     fig = px.line(
         x=list(dates.keys()),
-        y=list(signal.savgol_filter([x for x in list(dates.values()) if 0 <= x <= 50000], len(dates), len(dates) - 10)),
+        y=list(signal.savgol_filter([x for x in list(dates.values()) if 0 <= x <= 50000], 200, 3)),
     )
 
     html_file = open(os.getcwd()[:os.getcwd().find("chatstat") + 19] + '/res/htmls/mpd.html', 'x')
@@ -293,6 +295,6 @@ def graph_activity_v2():
     fig.show()
 
 
-graph_mpd()
+graph_mpd_v2()
 #graph_worduse("a*(b+c)")
 
